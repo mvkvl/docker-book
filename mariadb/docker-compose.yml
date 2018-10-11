@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  db:
+    build: .
+    container_name: mariadb
+    hostname: mariadb
+    image: mvkvl/mariadb
+    environment:
+        - TZ=Asia/Vladivostok
+        - MYSQL_ROOT_USER=admin
+    volumes:
+        - ./container/conf:/etc/mysql/conf.d:ro
+        - ./container/data:/var/lib/mysql
+        - ./container/env:/opt/env:ro
+        - ./scripts/env:/opt/scripts/env:ro
+    ports:
+        - 3306:3306
