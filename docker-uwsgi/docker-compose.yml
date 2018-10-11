@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  test-app:
+    build: .
+    container_name: test-app
+    hostname: test-app
+    image: mvkvl/uwsgi
+    volumes:
+        - ./test-app:/service
+    ports:
+      - 10080:8888
+    stdin_open: true
+    tty: true
