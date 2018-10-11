@@ -1,0 +1,14 @@
+version: '3.6'
+
+services:
+  telegraf:
+    build: .
+    container_name: telegraf
+    hostname: telegraf
+    image: mvkvl/telegraf
+    # volumes:
+        # - ../../container/influxdb/data:/var/lib/influxdb
+    ports:
+      - 8888:8888
+    stdin_open: true
+    tty: true

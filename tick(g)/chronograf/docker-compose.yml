@@ -1,0 +1,14 @@
+version: '3.6'
+
+services:
+  chronograf:
+    build: .
+    container_name: chronograf
+    hostname: chronograf
+    image: mvkvl/chronograf
+    # volumes:
+        # - ../../container/influxdb/data:/var/lib/influxdb
+    ports:
+      - 8888:8888
+    stdin_open: true
+    tty: true

@@ -1,0 +1,24 @@
+version: '3.6'
+
+services:
+  grafana:
+    build: .
+    container_name: grafana
+    hostname: grafana
+    image: mvkvl/grafana
+    # environment:
+      # INFLUX_DATABASE: monitor
+      # ADMIN_USER: admin
+      # ADMIN_PASSWORD: admin
+      # WRITER_NAME: writer
+      # WRITER_PASSWORD: writer
+      # READER_NAME: reader
+      # READER_PASSWORD: reader
+    volumes:
+        - ../../container/grafana/data:/var/lib/grafana
+        - ../../container/grafana/log:/var/log/grafana
+        # - ./scripts/run/entrypoint.sh:/opt/scripts/run/entrypoint.sh
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true

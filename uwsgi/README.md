@@ -1,5 +1,6 @@
 uWSGI (Docker image)
 ===========================
+uWSGI Docker Image (get it [here](https://hub.docker.com/r/mvkvl/uwsgi/))
 
 ## General Info
 - Based on [bitnami/minideb](https://hub.docker.com/r/bitnami/minideb/).

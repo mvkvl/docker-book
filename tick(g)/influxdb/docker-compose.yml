@@ -1,0 +1,24 @@
+version: '3.6'
+
+services:
+  influx:
+    build: .
+    container_name: influxdb
+    hostname: influxdb
+    image: mvkvl/influxdb
+    environment:
+      INFLUX_DATABASE: monitor
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: admin
+      WRITER_NAME: writer
+      WRITER_PASSWORD: writer
+      READER_NAME: reader
+      READER_PASSWORD: reader
+    volumes:
+        - ../../container/influxdb/data:/var/lib/influxdb
+        # - ./scripts/run/entrypoint.sh:/opt/scripts/run/entrypoint.sh
+    ports:
+      - 8083:8083
+      - 8086:8086
+    stdin_open: true
+    tty: true
