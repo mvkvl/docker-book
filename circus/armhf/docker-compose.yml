@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  test-app:
+    build: .
+    container_name: circus
+    hostname: circus
+    image: mvkvl/circus-armhf
+    volumes:
+        - ./circus.conf:/etc/circus.conf
+    ports:
+      - 10080:8888
+    # stdin_open: true
+    # tty: true

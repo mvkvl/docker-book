@@ -8,6 +8,9 @@
 # Here, `dockerhost` is the IP address or FQDN of a host running the Docker daemon
 # which acts as an APT proxy server.
 FROM    bitnami/minideb
+MAINTAINER kami <kami@slink.ws>
+
+ENV DEBIAN_FRONTEND noninteractive
 
 VOLUME  ["/var/cache/apt-cacher-ng"]
 RUN     apt-get update && apt-get install -y apt-cacher-ng net-tools
