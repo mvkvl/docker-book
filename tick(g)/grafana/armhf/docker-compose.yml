@@ -61,6 +61,22 @@ services:
     depends_on:
       - chronograf
 
+  monitoring:
+    container_name: monitoring
+    hostname: monitoring
+    image: mvkvl/monitoring-armhf
+    volumes:
+        - /docker/conf/monitor/rig-monitor/circus.conf:/etc/circus.conf
+        - /docker/conf/monitor/rig-monitor/bin:/service/bin
+        - /docker/conf/monitor/rig-monitor/lib:/service/lib
+        - /docker/conf/monitor/rig-monitor/conf:/service/conf
+        - /docker/conf/monitor/rig-tools/lib:/service/lib/rig
+    privileged: true
+    networks:
+      graf:
+        ipv4_address: 172.30.0.34
+    depends_on:
+      - chronograf
 
 #  telegraf:
 #    container_name: telegraf
