@@ -14,9 +14,9 @@ services:
   influxdb:
     container_name: influxdb
     hostname: influxdb
-    image: hypriot/rpi-influxdb
+    image: arm32v7/influxdb
     volumes:
-        - /docker/data/influxdb:/data
+        - /docker/data/influxdb:/var/lib/influxdb
         - /docker/conf/influxdb/influxdb.conf:/etc/influxdb.conf:ro
     ports:
       - 8083:8083
@@ -27,39 +27,19 @@ services:
     stdin_open: true
     tty: true
 
-  chronograf:
-    container_name: chronograf
-    hostname: chronograf
-    image: arm32v7/chronograf
+  redis:
+    container_name: redis
+    hostname: redis
+    image: arm32v7/redis
     volumes:
-      - /docker/data/chronograf:/var/lib/chronograf
+      - /docker/data/redis:/data
     ports:
-      - 8888:8888
+      - 6379:6379
     networks:
       graf:
         ipv4_address: 172.30.0.32
-    stdin_open: true
-    tty: true
     depends_on:
       - influxdb
-
-  grafana:
-    container_name: grafana
-    hostname: grafana
-    image: mvkvl/grafana-armhf:5.3.0-beta1
-    volumes:
-        - /docker/data/grafana/plugins:/var/lib/grafana/plugins/
-        - /docker/data/grafana/data:/var/lib/grafana
-        - /tmp/docker/grafana:/var/log/grafana/
-    ports:
-      - 3000:3000
-    networks:
-      graf:
-        ipv4_address: 172.30.0.33
-    stdin_open: true
-    tty: true
-    depends_on:
-      - chronograf
 
   monitoring:
     container_name: monitoring
@@ -74,9 +54,47 @@ services:
     privileged: true
     networks:
       graf:
+        ipv4_address: 172.30.0.35
+    depends_on:
+      - influxdb
+      - redis
+
+  chronograf:
+    container_name: chronograf
+    hostname: chronograf
+    image: arm32v7/chronograf
+    volumes:
+      - /docker/data/chronograf:/var/lib/chronograf
+    ports:
+      - 8888:8888
+    networks:
+      graf:
+        ipv4_address: 172.30.0.33
+    stdin_open: true
+    tty: true
+    depends_on:
+      - monitoring
+
+  grafana:
+    container_name: grafana
+    hostname: grafana
+    image: mvkvl/grafana-armhf:5.3.0-beta1
+    volumes:
+        - /docker/data/grafana/plugins:/var/lib/grafana/plugins/
+        - /docker/data/grafana/data:/var/lib/grafana
+        - /tmp/docker/grafana:/var/log/grafana/
+    ports:
+      - 3000:3000
+    networks:
+      graf:
         ipv4_address: 172.30.0.34
+    stdin_open: true
+    tty: true
     depends_on:
       - chronograf
+
+
+
 
 #  telegraf:
 #    container_name: telegraf
