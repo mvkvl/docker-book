@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  ss-server:
+    image: shadowsocks/shadowsocks-libev:latest
+    container_name: ss-server
+    hostname: ss-server
+    environment:
+       - TZ=Asia/Vladivostok
+       - PASSWORD=buratino.ty.sam.sebe.vragg
+       - METHOD=aes-256-cfb
+       - ARGS=--fast-open
+    ports:
+       - "8388:8388"
+       - "8388:8388/udp"
+    restart: unless-stopped
+
+  ss-client:
+    build: ./client
+    container_name: ss-client
+    hostname: ss-client
+    image: mvkvl/shadowsocks-client
+    volumes:
+       - ./client/config.json:/config.json
+    ports:
+       - "1080:1080"
+       - "1080:1080/udp"
+    depends_on:
+       - ss-server
+#    restart: unless-stopped

@@ -1,0 +1,13 @@
+version: '3'
+services:
+  shadowsocks:
+    image: shadowsocks/shadowsocks-libev:latest
+    environment:
+      - TZ=Asia/Vladivostok
+      - PASSWORD=buratino.ty.sam.sebe.vragg
+      - METHOD=aes-256-cfb
+      - ARGS=--fast-open
+    ports:
+      - "8390:8388"
+      - "8390:8388/udp"
+    restart: unless-stopped

@@ -1,0 +1,13 @@
+version: '3'
+services:
+  shadowsocks-client:
+    build: .
+    container_name: ss-client
+    hostname: ss-client
+    image: mvkvl/shadowsocks-client
+    volumes:
+       - ./config.json:/config.json   
+    ports:
+       - "1080:1080"
+       - "1080:1080/udp"
+#    restart: unless-stopped
